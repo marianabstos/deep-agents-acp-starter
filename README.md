@@ -50,15 +50,141 @@ uv sync
 ./scripts/run_agent.sh
 ```
 
-## Editor Setup
+## VS Code Setup
 
-For an ACP-compatible editor, configure a custom agent server that runs:
+This project can run inside VS Code through the **ACP Client** extension. VS Code is the client; this project is the ACP server.
 
-```bash
-/absolute/path/to/Deep Agents/scripts/run_agent.sh
+### 1. Install The Extension
+
+Install **ACP Client** from the VS Code Marketplace.
+
+After installing it, reload VS Code:
+
+```text
+Command Palette -> Developer: Reload Window
 ```
 
-The exact settings shape depends on the editor. Zed and JetBrains ACP integrations both follow the same core model: the editor starts this command, then communicates with the agent over ACP.
+### 2. Open This Project In VS Code
+
+Open the repository folder itself:
+
+```bash
+code "/absolute/path/to/deep-agents-acp-starter"
+```
+
+If the `code` command is not available, open VS Code and use:
+
+```text
+File -> Open Folder...
+```
+
+### 3. Configure The ACP Agent
+
+Create `.vscode/settings.json` in your local checkout.
+
+Do not commit this file if it contains machine-specific absolute paths. This repo ignores `.vscode/settings.json` for that reason.
+
+Use this template and replace the two paths with your local repository path:
+
+```json
+{
+  "acp.agents": {
+    "Deep Agents Starter": {
+      "command": "/absolute/path/to/deep-agents-acp-starter/scripts/run_agent.sh",
+      "args": [],
+      "env": {}
+    }
+  },
+  "acp.defaultWorkingDirectory": "/absolute/path/to/deep-agents-acp-starter"
+}
+```
+
+Example on macOS:
+
+```json
+{
+  "acp.agents": {
+    "Deep Agents Starter": {
+      "command": "/Users/your-user/Desktop/deep-agents-acp-starter/scripts/run_agent.sh",
+      "args": [],
+      "env": {}
+    }
+  },
+  "acp.defaultWorkingDirectory": "/Users/your-user/Desktop/deep-agents-acp-starter"
+}
+```
+
+The extension starts `run_agent.sh` automatically. You do not need to run the script manually while using VS Code.
+
+### 4. Connect To The Agent
+
+Open the Command Palette and run:
+
+```text
+ACP: Open Chat Panel
+```
+
+Then connect:
+
+```text
+ACP: Connect to Agent
+```
+
+Choose:
+
+```text
+Deep Agents Starter
+```
+
+If needed, create a conversation with:
+
+```text
+ACP: New Conversation
+```
+
+### 5. Test The Connection
+
+Send:
+
+```text
+Liste os arquivos deste projeto e explique a estrutura.
+```
+
+If everything is working, the ACP Client log should show lines similar to:
+
+```text
+Starting Deep Agents ACP server with openai:gpt-5...
+LangSmith project: deep-agents-acp-starter
+Connected to agent Deep Agents Starter
+Prompt response: stopReason=end_turn
+```
+
+### Troubleshooting VS Code
+
+If the ACP commands do not appear, confirm that the installed extension is **ACP Client**, then reload VS Code.
+
+If the agent does not start, open:
+
+```text
+Command Palette -> ACP: Show Log
+```
+
+Common issues:
+
+- `OPENAI_API_KEY is missing`: create `.env` from `.env.example` and fill `OPENAI_API_KEY`.
+- `run_agent.sh` path is wrong: update `.vscode/settings.json` with the absolute path on your machine.
+- `uv` is missing: install `uv`, then run `uv sync`.
+- `EnvAddressError` from LangSmith: use `LANGSMITH_PROJECT`, not `LANGSMITH_AGENT_ID` / `LANGSMITH_AGENT_ENVIRONMENT`.
+
+## Other ACP Editors
+
+For another ACP-compatible editor, configure a custom agent server that runs:
+
+```bash
+/absolute/path/to/deep-agents-acp-starter/scripts/run_agent.sh
+```
+
+The exact settings shape depends on the editor. Zed and JetBrains ACP integrations follow the same core model: the editor starts this command, then communicates with the agent over ACP.
 
 ## Local Web UI
 
