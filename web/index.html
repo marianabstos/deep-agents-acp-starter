@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Deep Agents Web</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="mark">DE</div>
+          <div>
+            <h1>Deep Agents</h1>
+            <p>One harness, local web surface</p>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button class="nav-item active" data-panel="chat">Chat</button>
+          <button class="nav-item" data-panel="specs">Specs</button>
+          <button class="nav-item" data-panel="steering">Steering</button>
+          <button class="nav-item" data-panel="permissions">Permissions</button>
+          <button class="nav-item" data-panel="traces">Traces</button>
+        </nav>
+
+        <section class="surface-card">
+          <span class="label">Surfaces</span>
+          <strong>VS Code ACP + Web</strong>
+          <p>The same agent code now has an editor surface and a browser surface.</p>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Local Harness</span>
+            <h2>deep-agents-acp-starter</h2>
+          </div>
+          <div class="status-pill" id="status-pill">Connecting</div>
+        </header>
+
+        <section class="content-grid">
+          <section class="main-panel">
+            <div class="panel active" id="panel-chat">
+              <div class="messages" id="messages">
+                <div class="message assistant">
+                  <span>Agent</span>
+                  <p>Oi. Esta é a superfície Web local do mesmo projeto que você conectou no VS Code via ACP.</p>
+                </div>
+              </div>
+
+              <form class="composer" id="composer">
+                <textarea id="prompt" rows="3" placeholder="Peça para o agente ler arquivos, explicar a estrutura ou planejar uma mudança..."></textarea>
+                <button type="submit">Send</button>
+              </form>
+            </div>
+
+            <div class="panel" id="panel-specs">
+              <h3>Specs</h3>
+              <p>Espaço para transformar ideias em requisitos, design e tarefas antes de pedir mudanças no código.</p>
+              <div class="spec-columns">
+                <article><span>01</span><strong>Requirements</strong><p>O que precisa existir e para quem.</p></article>
+                <article><span>02</span><strong>Design</strong><p>Arquitetura, fluxos e decisões.</p></article>
+                <article><span>03</span><strong>Tasks</strong><p>Passos pequenos para execução pelo agente.</p></article>
+              </div>
+            </div>
+
+            <div class="panel" id="panel-steering">
+              <h3>Steering</h3>
+              <p>Regras persistentes do projeto: estilo, limites, convenções e contexto que deve acompanhar cada turno.</p>
+              <pre>Use OpenAI only.
+Keep changes scoped.
+Ask before destructive operations.
+Trace runs in LangSmith.</pre>
+            </div>
+
+            <div class="panel" id="panel-permissions">
+              <h3>Permissions</h3>
+              <p>Esta primeira Web UI ainda não aprova comandos interativamente. Ela mostra o modelo de superfície e mantém ações sensíveis sob responsabilidade do harness.</p>
+              <div class="permission-list">
+                <div><strong>Read files</strong><span>Allowed by local harness</span></div>
+                <div><strong>Edit files</strong><span>Agent-managed</span></div>
+                <div><strong>Shell commands</strong><span>Use with care</span></div>
+              </div>
+            </div>
+
+            <div class="panel" id="panel-traces">
+              <h3>Traces</h3>
+              <p>Abra o projeto <strong>deep-agents-acp-starter</strong> no LangSmith para ver chamadas, ferramentas e erros.</p>
+              <a href="https://smith.langchain.com/" target="_blank" rel="noreferrer">Open LangSmith</a>
+            </div>
+          </section>
+
+          <aside class="run-panel">
+            <section>
+              <span class="label">Run Loop</span>
+              <ol class="run-steps" id="run-steps">
+                <li class="active">Context</li>
+                <li>Model</li>
+                <li>Tools</li>
+                <li>Results</li>
+                <li>Done</li>
+              </ol>
+            </section>
+
+            <section>
+              <span class="label">Project</span>
+              <dl class="meta">
+                <div><dt>Model</dt><dd id="model">openai:gpt-5</dd></div>
+                <div><dt>LangSmith</dt><dd id="langsmith">deep-agents-acp-starter</dd></div>
+                <div><dt>Workspace</dt><dd id="workspace">Loading</dd></div>
+              </dl>
+            </section>
+
+            <section>
+              <span class="label">Tool Calls</span>
+              <div id="tools" class="tools-empty">No tool calls yet</div>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
